@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity
@@ -17,6 +19,8 @@ class Employee
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @OA\Property(type="string")
+     * @Groups({"read"})
      */
     private $id;
 
@@ -24,13 +28,8 @@ class Employee
      * @var string
      *
      * @ORM\Column(type="string")
-     */
-    private $username;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string")
+     * @OA\Property(type="string")
+     * @Groups({"read", "save"})
      */
     private $firstName;
 
@@ -38,20 +37,29 @@ class Employee
      * @var string
      *
      * @ORM\Column(type="string")
+     * @OA\Property(type="string")
+     * @Groups({"read", "save"})
      */
     private $lastName;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
+     * @OA\Property(
+     *     type="string",
+     *     enum={"help_desk", "manager", "customer_support", "director"}
+     * )
+     * @Groups({"read", "save"})
      */
     private $position;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
+     * @OA\Property(type="string")
+     * @Groups({"read", "save"})
      */
     private $phoneNumber;
 
@@ -63,16 +71,6 @@ class Employee
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): void
-    {
-        $this->username = $username;
     }
 
     public function getFirstName(): ?string
@@ -95,12 +93,12 @@ class Employee
         $this->lastName = $lastName;
     }
 
-    public function getPosition(): ?int
+    public function getPosition(): ?string
     {
         return $this->position;
     }
 
-    public function setPosition(int $position): void
+    public function setPosition(string $position): void
     {
         $this->position = $position;
     }

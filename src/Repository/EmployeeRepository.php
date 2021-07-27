@@ -14,4 +14,11 @@ class EmployeeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Employee::class);
     }
+
+    public function findByPhoneNumber(string $phoneNumber): ?Employee
+    {
+        return $this->findOneBy([
+            'phoneNumber' => $phoneNumber
+        ]);
+    }
 }

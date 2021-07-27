@@ -1,0 +1,7 @@
+App\Entity\Employee:
+  employee_{1..100}:
+    __construct: false
+    firstName: '<firstName()>'
+    lastName: '<lastName()>'
+    position: '<enumForFunc(App\\Glossary\\PositionType::getConstantValues)>'
+    phoneNumber (unique): '<randomNumber(9)>'
